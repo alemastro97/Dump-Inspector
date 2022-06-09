@@ -1,0 +1,56 @@
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    try {
+	    	List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(new ServletRequestContext(request));
+	        for (FileItem item : items) {
+	            if (item.isFormField()) {
+	                // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+	                String fieldName = item.getFieldName();
+	                String fieldValue = item.getString();
+	                System.out.println(fieldName + " " + fieldValue);
+	                // ... (do your job here)
+	            } else {
+	                // Process form file field (input type="file").
+	                String fieldName = item.getFieldName();
+	                String fileName = item.getName();
+	                InputStream fileContent = item.getInputStream();
+	                System.out.println(fieldName + " " + fileName + " " + fileContent);
+	                
+	                File outputfile = new File("C:/Users/Luca/eclipse-workspace/TIW2019-EsercizioPerEsame/WebContent/WEB-INF/saved.png");
+	                File f = new File("C:/Users/Luca/eclipse-workspace/TIW2019-EsercizioPerEsame/WebContent/WEB-INF/saved.png");
+
+	                OutputStream os = new FileOutputStream(f);
+	                byte[] buf = new byte[1024];
+	                int len;
+
+	                while ((len = fileContent.read(buf)) > 0) {
+	                    os.write(buf, 0, len);
+	                }
+
+	                os.close();
+	                fileContent.close(); // ... (do your job here)
+	            }
+	        }
+	    } catch (FileUploadException e) {
+	        throw new ServletException("Cannot parse multipart request.", e);
+	    }
+
+	    // ...
+	}
+
+
+
+
+
+
+
+
+
+
+FORM:
+
+<c:url value = "/checkLog" var = "URLog"></c:url>
+<form action="${URLog}" method="post" enctype="multipart/form-data">
+    <input type="text" name="description" />
+    <input type="file" name="file" />
+    <input type="submit" />
+</form>
