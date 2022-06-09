@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>dump-inspectors</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" media="all" href="../CSS/style.css" th:href="@{/CSS/style.css}">
+	<script type="text/javascript" src="../JAVASCRIPT/login.js" th:src="@{/JAVASCRIPT/login.js}" defer></script>
+</head>
+
+<body>
+	<input type="hidden" id="errorRegistrazione" value="0000" />
+	<script th:inline="javascript">
+		var errorUsername = /*[[${errorUsername}]]*/ 'errorUsername';
+		var errorEmail = /*[[${errorEmail}]]*/ 'errorEmail';
+		var errorPwdLength = /*[[${errorPwdLength}]]*/ 'errorPwdLength';
+		var errorPwdConfirm = /*[[${errorPwdConfirm}]]*/ 'errorPwdConfirm';
+		var errorLogin = /*[[${error}]]*/ 'error';
+		document.getElementById("errorRegistrazione").value = errorUsername + "" + errorEmail + "" + errorPwdLength + "" + errorPwdConfirm;
+	</script>
+	<div class="site">
+		<div class="login">
+			<div class="title">
+				<h2>dump-inspectors</h2>
+			</div>
+
+			<form id="loginForm" class="form" method="GET" th:action="@{/CheckLogin}">
+				<input class="username" type="text" name="Username" placeholder="username" required>
+				<input class="password" type="password" name="Password" placeholder="password" required>
+				<span th:if="${error} == 1" id="LoginError">Errore</span>
+				<input type="submit" name="submit" value="Sign in">
+				<div class="login-reg-switch">
+					Not registered? <a href="#" id="linkRegistrazione">Create an account</a>
+				</div>
+			</form>
+
+			<form id="registrationForm" enctype="multipart/form-data" class="form" th:action="@{/CheckRegistrazione}" method="POST" th:style="${errorcpwd} == '1'? 'display:block' : 'display:none'">
+				<input class="username" type="text" name="Username" placeholder="username">
+				<div id="error_username" class="invalid-feedback">
+					Username gia' presente
+				</div>
+				<input class="password" type="password" name="Password" placeholder="password">
+				<div class="progress">
+
+					<div id="25" class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+					<div id="50" class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+					<div id="75" class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+					<div id="100" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+				<div id="progess_text" class="">
+
+				</div>
+				<input class="password" type="password" name="ConfermaPassword" placeholder="ripeti password">
+				<div id="error_pwdConfirm" class="invalid-feedback">
+					Password differenti
+				</div>
+				<span id="CheckPwd" style="display: none">Password troppo corta(Min: 8 caratteri)</span>
+				<input type="email" name="Email" placeholder="email">
+
+				<div id="error_email" class="invalid-feedback">
+					Email gia' presente
+				</div>
+				<div class="describer">Selezionare un ruolo:</div>
+				<div class="radio-group">
+					<input type="radio" id="manager" name="UserType" value="Manager">
+					<label for="manager"><span>Manager</span></label>
+					<input type="radio" id="lavoratore" name="UserType" value="Lavoratore">
+					<label for="lavoratore"><span>Lavoratore</span></label>
+				</div>
+				<div class="profile-photo" id="photo">
+					<div class="describer">Selezionare un immagine di profilo:</div>
+					<input type="file" id="avatar" name="Avatar" accept="image/png, image/jpeg">
+				</div>
+				<input type="submit" name="registrazione" value="Registrati">
+				<div class="login-reg-switch">
+					Already registered? <a href="#" id="linkLogin">Sign In</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

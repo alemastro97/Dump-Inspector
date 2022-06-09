@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+   <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>Mappa campagna</title>
+
+	<script th:inline="javascript">
+			var campagna = [[${campagna}]];
+			var localita = [[${localita}]];
+			var codes = [[${codes}]];
+	</script>
+<style type="text/css">
+#mapid {
+	height: 300px;
+}
+</style>
+</head>
+<body>
+  <nav class="navbar border border-light" style="background:#a1dd70;">
+  <div id = "pop" class = "">
+	<a th:href = "@{/GetManagerPage}"><button class="btn btn-light btn-outline-dark mr-sm-2" id = "return">indietro</button></a>
+	<a th:href = "@{/GetModificaProfiloManager}"><button class="btn btn-light btn-outline-dark mr-sm-2" id = "editProfile">ModificaProfilo</button></a>
+	<a th:href="@{/GetLogin}"><button id="logout-button" type="button" class = "btn btn-light btn-outline-dark mr-sm-2" name="logout">Logout</button></a>	
+	</div>
+</nav>
+     <div id ="mapid" class = "container"><!-- style="width: 600px; height: 400px;" -->
+     <script th:inline="javascript">
+		/*<![CDATA[*/
+		
+		/*var message = [[${localita[0].Nome}]];
+		alert(message);*/
+		
+		/*]]>*/
+		</script>
+     </div>
+	<div style="width: 1200px; margin: 0 auto;" id="container_image">
+		<div class="card mb-3" style="max-width: 1200px; max-height: 900px;">
+			<div class="row no-gutters">
+				<div class="col-md-4" style="max-width: 450px; max-height: 400px;">
+					<img src="" style="width: 450px; height: 300px;" id="image_box"
+						class="card-img">
+				</div>
+				<div class="col-md-8" style="max-width: 600px; max-height: 400px;">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm">
+									<div id="annotation_pagination">
+										<ul id="comment_page" class="list-group">
+										</ul>
+										<nav aria-label="Page navigation example">
+											<ul id="pages" class="pagination">
+											</ul>
+										</nav>
+									</div>
+								</div>
+								<div id="userCard" class="col-sm">
+									<div class="card" style="width: 15rem;">
+										<img src="" class="card-img-top" id="imgUser">
+										<div class="card-body">
+											<p class="card-text" id="userData"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mx-auto" style="width: 200px;">
+		<button class="btn" style="background-color: #a1dd70;" id="precedente">precedente</button>
+		<button style="background-color: #a1dd70;" class="btn" id="successivo">successivo</button>
+	</div>
+	<script type="text/javascript" src="../JAVASCRIPT/login.js" th:src="@{/JAVASCRIPT/managerMapPage.js}" defer></script>
+</body>
+</html>

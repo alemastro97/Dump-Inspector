@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+		<title>Statistiche</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" media="all" href="../CSS/style.css" th:href="@{/CSS/style.css}">
+		<script th:inline="javascript">
+				var campagna = [[${idCampagna}]];
+				var localita = [[${localita}]];
+				var codes = [[${codes}]];
+				var conflict= [[${conflitti}]];
+		</script>		
+	</head>
+<body>
+<nav class="navbar border border-light" style="background:#a1dd70;">
+  <div id = "pop" class = "">
+	<a th:href = "@{/GetManagerPage}"><button class="btn btn-light btn-outline-dark mr-sm-2" id = "return">indietro</button></a>
+	<a th:href = "@{/GetModificaProfiloManager}"><button class="btn btn-light btn-outline-dark mr-sm-2" id = "editProfile">ModificaProfilo</button></a>
+	<a th:href="@{/GetLogin}"><button id="logout-button" type="button" class = "btn btn-light btn-outline-dark mr-sm-2" name="logout">Logout</button></a>	
+  </div>
+</nav>
+	<h1> Statistiche per <span th:text="${nomeCampagna}"> CAMPAGNA ESEMPIO </span></h1>
+		<span> Numero totale localita' campagna: </span> <span th:text="${totLoc}"> 1400</span> <br>
+		<span> Numero totale immagini campagna: </span> <span th:text="${totImm}"> 1400</span> <br>
+		<span> Numero totale annotazioni campagna: </span> <span th:text="${totAnn}"> 1400</span> <br>
+		<span> Numero medio immagini per localita' della campagna: </span> <span th:text="${avgImmPerLoc}"> 1400</span> <br>
+		<span> Numero medio annotazioni per immagine della campagna: </span> <span th:text="${avgAnnPerImm}"> 1400</span> <br>
+		<span> Numero conflitti della campagna: </span> <span th:text="${numConflitti}"> 1400</span> <br>	
+		<h2> Conflitti: </h2>
+	<div th:if="${conflitti.size() > 0}">
+		<div class="media">
+			<img style="width: 120px; heigth: 180px;" id="images" class="mr-3">
+			<div class="media-body">
+				<h5 class="mt-0" id="title_conflict">Conflitti sulla foto:</h5>
+				<p id="text_conflict"></p>
+			</div>
+		</div>
+		<nav aria-label="Page navigation example">
+			<ul id="pages" class="pagination">
+			</ul>
+		</nav>
+	</div>
+	<div th:unless= "${conflitti.size() > 0}">
+        	Non ci sono conflitti nelle annotazioni.
+        </div>
+	<script type="text/javascript" src="../JAVASCRIPT/statistics.js"
+		th:src="@{/JAVASCRIPT/statistics.js}" defer></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+@import "https://fonts.googleapis.com/css?family=Quicksand";
+
+/*
+Color palette:
+  mio_GREEN: #a1dd70
+  mio_WHITE: #fdfff0
+  mio_GRAY-LIKE: #e8ecd6
+  mio_RED: #a23131
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  position: relative;
+  height: 100%;
+  margin: 0;
+}
+
+.site {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+}
+
+.site {
+  background-color: #a1dd70;
+  display: grid;
+  grid-template-columns: 1fr 25em 1fr;
+  grid-template-rows: 1fr auto 1fr;
+}
+
+.login {
+  box-sizing: border-box;
+  padding: 2em;
+  display: grid;
+  grid-template-rows: auto auto;
+  border-radius: 4px;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.2);
+  background-color: #fdfff0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.title {
+  margin: auto;
+  margin-bottom: 0;
+  grid-row: 1/2;
+}
+
+.form {
+  grid-row: 2/3;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.form > * {
+  width: 100%;
+}
+
+.form > input {
+  padding: 0 0 0 10px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  font-family: inherit;
+  font-size: 1em;
+  height: 2.5em;
+  margin-top: 1em;
+}
+
+.form > input[type="submit"] {
+  padding: 0;
+}
+
+.form > input[type="file"] {
+  border: none;
+}
+
+.form input[type=radio] {
+  position: absolute;
+  visibility: hidden;
+  display: none;
+}
+
+label {
+  display: flex;
+  cursor: pointer;
+  padding: 5px 20px;
+  width: 50%;
+  height: 2em;
+  text-align: center;
+  padding: auto;
+  align-items: center;
+}
+
+label + input[type=radio] + label {
+  border-left: 1px solid #bbb;
+}
+
+input[type=radio]:checked + label{
+  background: #e8ecd6;
+}
+
+.radio-group {
+  background: white;
+  display: flex;
+  flex-direction: row;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  margin-top: none;
+}
+
+div.describer {
+  margin-top: 1em;
+}
+
+label > span {
+  margin: auto;
+}
+
+.login-reg-switch {
+  margin-top: 1.4em;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+#avatar {
+  margin-top: 1em;
+}

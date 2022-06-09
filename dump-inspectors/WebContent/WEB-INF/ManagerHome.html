@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Home</title>
+  
+  
+    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="all" href="../CSS/commonStyle.css" th:href="@{/CSS/commonStyle.css}" >
+</head>
+
+<body>
+  <!-- POSSIBILITA' DI AGGIUNGERE UNA SCROLLBAR PER LE CAMPAGNE -->
+  <div class="background">
+    <div class="container">
+      <div class="page-manager-home">
+        <div class="manager-campaign-list module">
+          <div class="main-title">
+            <h1>HOME</h1>
+          </div>
+          <div class="abstract">
+            <span>Seleziona una campagna dalla lista per visualizzarne i dettagli:</span>
+          </div>
+          <div class="object-list">
+            <div th:switch="${campagne.size()}">
+              <div th:case=0>
+                <ul>
+                  <li>Non hai creato nessuna campagna.</li>
+                </ul>
+              </div>
+              <div th:case="*">
+                <ul>
+                  <li th:each="campagna: ${campagne}">
+                    <a href="ManagerPage.html" th:href="@{/GetDettaglioCampagna(idCampagna=${campagna.idCampagna})}">
+                                  
+                    <th:block th:switch="${campagna.stato}">
+								<div th:case="'creato'">
+									<span th:text="${campagna.nome + ' '}"> </span><span class="badge badge-primary">Creata</span>
+								</div>
+								<div th:case="'avviato'">
+									<span th:text="${campagna.nome + ' '}"> </span><span class="badge badge-success">Avviata</span>
+								</div>
+								<div th:case="'chiuso'">
+									<span th:text="${campagna.nome + ' '}"> </span><span class="badge badge-danger">Chiusa</span>
+								</div>
+						</th:block>
+                   
+                  
+                    </a>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="manager-home-logout">
+          <div class="profile-logout module">
+            <a href="#" th:href="@{/GetModificaProfiloManager}"><button type="button" name="gesioneProfilo">
+                Gestione Profilo</button></a>
+            <a th:href="@{/GetLogin}"><button id="logout-button" type="button" name="logout">
+                Logout</button></a>
+          </div>
+        </div>
+
+        <div class="new-campaign module">
+          <div class="module-title">
+            <h2>Crea nuova campagna</h2>
+          </div>
+
+          <div class="new-campaign-form">
+            <form class="" method="POST" th:action="@{/CreateCampagna}">
+              <input required type="text" name="nomeCampagna" placeholder="nome campagna">
+              <input required type="text" name="committente" placeholder="committente">
+              <input type="submit" name="" value="Crea">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

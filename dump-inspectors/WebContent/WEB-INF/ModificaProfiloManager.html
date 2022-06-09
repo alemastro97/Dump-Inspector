@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Modifica Profilo Manager</title>
+  	<meta charset="utf-8">
+  	<link rel="stylesheet" type="text/css" media="all" href="../CSS/commonStyle.css" th:href="@{/CSS/commonStyle.css}">
+  	<script type="text/javascript" src="../JAVASCRIPT/updateManager.js" th:src="@{/JAVASCRIPT/updateManager.js}" defer></script>	
+</head>
+<body>
+	<input type="hidden" id="errorChange" value="0000" />
+	<input type="hidden" id="errorLog" value="0" th:value="${error}"/>
+	<script th:inline="javascript">
+		var errorUsername = /*[[${errorUsername}]]*/'errorUsername';
+		var errorEmail = /*[[${errorEmail}]]*/'errorEmail';
+		var errorPwdLength = /*[[${errorPwdLength}]]*/'errorPwdLength';
+		var errorPwdConfirm = /*[[${errorPwdConfirm}]]*/'errorPwdConfirm';
+		document.getElementById("errorChange").value = errorUsername	+ "" + errorEmail + "" + errorPwdLength + "" + errorPwdConfirm;
+	</script>
+	<div class="background">
+    	<div class="container">
+      		<div class="page-manager-modifica">
+        		<div class="campaign-details module">
+          			<div class="">
+           				 <h1 th:text = "${utente.getUsername()}">  </h1>	
+        			</div>
+        			<div class="update-profile-form">
+			            <form id="updateDataForm" class="form" method="POST" th:action="@{/UpdateManagerProfile}">
+			              	<input required type="text" name="username" th:value="${utente.username}" placeholder="Username"> <br>
+			              	<span id = "Error_Username">Username gia utilizzato.</span> <br>
+			              	<input type="email" name="email" th:value="${utente.email}" placeholder="email"> <br>
+			              	<span id = "Error_Mail">Email gia utilizzata</span><br>
+			              	<input type="submit" name="" value="Salva modifiche"> <br>
+			              	<input type="hidden" name = "toChange" value="data" />
+               		  		<a href="#"><button type="button" name="changePwd">Cambia Password</button></a>
+			            </form>
+		          	</div>
+		          	<div class="update-pwd-form">
+			            <form id="updatePwdForm" class="form" method="POST" th:action="@{/UpdateManagerProfile}">
+			              	<input class="password" type="password" name="oldpwd" placeholder="Vecchia  Password" maxlength="20"> <br>
+			              	<span th:if ="${error} == 1" id = "LoginError">Password errata</span> <br>
+							<input class="password" type="password" name="newpwd" placeholder="Nuova  Password" maxlength="20"> <br>
+							<span id="strength">More Characters</span> <br>
+							<input class="password" type="password" name="newpwdc" placeholder="Conferma nuova Password" maxlength="20"> <br>
+							<span id="DifferentPwd">Password differenti</span> <br>
+			              	<input type="submit" name="" value="Modifica pwd"/>
+			              	<input type="hidden" name = "toChange" value="pwd" />
+			              	<a href="#"><button type="button" name="changeData">Cambia dati profilo</button></a>
+			            </form>
+		          	</div>
+      			</div>
+      			<div id="manager-home-logout">
+					<div class="profile-logout module">
+						<a th:href="@{/GetManagerPage}"><button class="" id="return">indietro</button></a>
+						<a th:href="@{/GetLogin}"><button id="logout-button"
+								type="button" name="logout">Logout</button></a>
+					</div>
+				</div>
+    		</div>
+  		</div>
+  	</div>
+</body>
+
+</html>

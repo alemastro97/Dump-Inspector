@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Worker Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+#map {
+	height: 300px;
+}
+</style>
+<script th:inline="javascript">
+		var campagna = /*[[${Campagna}]]*/'Campagna';
+		var localita = /*[[${Localita}]]*/'Localita';
+</script>
+</head>
+<body>
+<nav class="navbar border border-light" style="background:#a1dd70;">
+  <div id = "pop" class = "">
+	<span id = "welcomeuser" class="navbar-text"></span>
+	<a th:href = "@{/GetWorkerPage}"><button class="btn btn-light btn-outline-dark mr-sm-2" id = "return">indietro</button></a>
+	<a th:href = "@{/GetModificaProfiloWorker}"><button class="btn btn-light btn-outline-dark mr-sm-2" id = "editProfile">ModificaProfilo</button></a>
+	<a th:href="@{/GetLogin}"><button id="logout-button" type="button" class = "btn btn-light btn-outline-dark mr-sm-2" name="logout">Logout</button></a>
+	</div>
+</nav>
+<div id="map"></div>
+<div id = "dynamic_list">
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+     	<img src = ""  class="card-img-top"  style="width: 450px;height:300px;" id = "imageTag">
+    </div>
+    <div class="col-md-8">
+					<div class="card-body">
+						<div class="card-body">
+							<div id="Insert_note_show" class="form-group">
+								<label for="exampleFormControlTextarea1">Hai gia'
+									inserito la seguente annotazione:</label>
+								<textarea class="form-control" rows="4" cols="50" name="Note"
+									id="Insert_note"></textarea>
+							</div>
+							<form method="post" th:action="@{/CreateAnnotation}"
+								id="formAnnotation">
+								<input type="hidden" id="hidden_image" name="hidden_image">
+								<div class="form-group">
+									<label for="exampleFormControlTextarea1">Inserire
+										annotazione:</label>
+									<textarea class="form-control" rows="4" cols="50" name="Nota"
+										id="Nota"></textarea>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="r1" name="radio" value="valida"
+										class="custom-control-input"> <label
+										class="custom-control-label" for="r1">Valida</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="r2" name="radio" value="nonvalida"
+										class="custom-control-input"> <label
+										class="custom-control-label" for="r2">Non valida</label>
+								</div>
+								<button type="submit" id="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+    </div>
+  </div>
+</div>
+	<div class="mx-auto" style="width: 200px;">
+  <button class = "btn" style = "background-color: #a1dd70;" id = "precedente">precedente</button><button style = "background-color: #a1dd70;" class = "btn" id = "successivo">successivo</button>
+</div>
+	<br>
+</body>
+<script type="text/javascript" src="../JAVASCRIPT/login.js" th:src="@{/JAVASCRIPT/workerMapPage.js}" defer></script>
+</html>

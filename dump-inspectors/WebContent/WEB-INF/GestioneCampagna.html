@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" media="all" href="../CSS/commonStyle.css" th:href="@{/CSS/commonStyle.css}">
+	<title>Home</title>
+	<script th:inline="javascript">
+		var campagna = /*[[${campagna}]]*/ 'campagna';
+	</script>
+<script type="text/javascript" th:src="@{/JAVASCRIPT/gestioneCampagna.js}" src="../JAVASCRIPT/gestioneCampagna.js" defer></script>
+</head>
+<body>
+	<div class="background">
+		<div class="container">
+			<div class="page-manager-gestione">
+				<!-- ******************************************* DETTAGLI CAMPAGNA -->
+				<div class="campaign-details module">
+					<div class="">
+						<h1 th:text="${campagna.getNome()}"></h1>
+						<div th:switch="${campagna.getStato()}">
+							<div th:case="creato">
+								<form th:action="@{/EditCampagna}" method="POST">
+									<div class="info">
+										<p>Nome:</p>
+										<input type="text" name="nome"
+											th:value="${campagna.getNome()}" />
+									</div>
+									<div class="info">
+										<p>Committente:</p>
+										<input type="text" name="committente"
+											th:value="${campagna.getCommittente()}" />
+									</div>
+									<div class="info">
+										<span id="stato-campagna-avviato">Stato: creato</span>
+									</div>
+									<input type="submit" value="Modifica" /> <input type="hidden"
+										name="idCampagna" th:value="${campagna.idCampagna}" />
+								</form>
+								<a
+									th:href="@{/StartCampagna(idCampagna=${campagna.idCampagna})}"><button
+										type="button">Avvia</button></a> <span
+									th:if="${localitaPresente != null}" style="color: red">La
+									campagna non contiene nessuna localita'</span>
+							</div>
+							<div th:case="*">
+								<div class="info">
+									<p>Nome:</p>
+									<input disabled type="text" name="nome"
+										th:value="${campagna.getNome()}" />
+								</div>
+								<div class="info">
+									<p>Committente:</p>
+									<input disabled type="text" name="nome"
+										th:value="${campagna.getCommittente()}" />
+								</div>
+								<div class="info">
+									<span id="stato-campagna-avviato">Stato:</span><span
+										id="stato-campagna-avviato" th:text="${campagna.stato}"></span>
+								</div>
+								<a th:if="${campagna.getStato() == 'avviato'}"
+									th:href="@{/CloseCampagna(idCampagna=${campagna.idCampagna})}"><button
+										type="button">Chiudi</button></a>
+							</div>
+						</div>
+					</div>
+					<div th:if="${campagna.getStato() == 'avviato'}" class="">
+						<a th:href="@{/GetManagerMap(idCampagna=${campagna.idCampagna})}"><button
+								type="button" name="button">Visualizza Mappa</button></a> <a
+							th:href="@{/GetStats(idCampagna=${campagna.idCampagna})}"><button
+								type="button" name="button">Statistiche</button></a>
+					</div>
+				</div>
+				<!-- ******************************************************* LOGOUT -->
+				<div id="manager-gestione-logout" class="module">
+					<div class="profile-logout">
+						<a th:href="@{/GetManagerPage}"><button type="button"
+								id="return">indietro</button></a> <a href="#"
+							th:href="@{/GetModificaProfiloManager}"><button type="button"
+								name="gestioneProfilo">Gestione Profilo</button></a> <a
+							th:href="@{/GetLogin}"><button id="logout-button"
+								type="button" name="logout">Logout</button></a>
+					</div>
+				</div>
+				<!-- ***************************************************** LOCALITA -->
+				<div class="manager-localita module" id="manager-localita">
+					<div class="" id="module-lista-localita">
+						<div class="main-title">
+							<h2>Localita':</h2>
+						</div>
+						<div class="abstract">
+							<span>Seleziona una localita' per visualizzarne le
+								immagini:</span>
+						</div>
+						<div class="object-list">
+							<span th:if="${localita.isEmpty()}">Nessuna localita' per
+								questa campagna</span>
+							<ul th:remove="all-but-first" id="elenco-localita">
+								<li th:each="loc : ${localita}"><a 
+									th:text="${loc.getNome()}"></a> <input type="hidden"
+									th:value="${loc.idLocalita}"></li>
+								<li><a href="#">Localita' 1</a></li>
+								<li><a href="#">Localita' 2</a></li>
+								<li><a href="#">Localita' 3</a></li>
+								<li><a href="#">Localita' 4</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- immagini per localita -->
+					<div class="" id="imgLocalita" th:remove="body">
+						<img src="../IMG/DEFAULT/pic1.jpg" alt=""> <img
+							src="../IMG/DEFAULT/pic2.jpg" alt=""> <img
+							src="../IMG/DEFAULT/pic3.jpg" alt=""> <img
+							src="../IMG/DEFAULT/pic4.jpg" alt="">
+					</div>
+				</div>
+				<!-- ****************************************************** WIZARD -->
+				<div class="container"
+					th:style="${campagna.getStato()} == 'creato' ? 'display:grid' : 'display:none'">
+					<div class="row">
+						<div class="col">
+							<div
+								th:style="${campagna.getStato()} == 'creato' ? 'display:grid' : 'display:none'"
+								class="wizard module">
+								<form id="form" action="#" th:action="@{/NewLocalitaImmagine}"
+									method="post" enctype="multipart/form-data">
+									<button class="bottoni-left" type="button" name="prec"
+										style="display: none;">Precedente</button>
+
+									<div id="firstPage">
+										<select id="sreg" class="" name="idlocalita"></select> <br>
+										<input type="hidden" name="newLocalita" value="true">
+										<input type="hidden" name="idcampagna"
+											th:value="${campagna.idCampagna}"> <input type="text"
+											id="lat" class="newHidden" name="latitudine" value=""
+											placeholder="latitudine" style="display: block;"> <input
+											type="text" id="lon" class="newHidden" name="longitudine"
+											value="" placeholder="longitudine" style="display: block;">
+										<div class="newHidden" style="display: none;">
+											<span id="latlonAlert" style="display: none;">Inserire
+												coordinate valide.</span>
+										</div>
+										<input type="text" class="newHidden" name="nome" value=""
+											placeholder="nome" style="display: block;"> <input
+											type="text" class="newHidden" name="comune" value=""
+											placeholder="comune" style="display: block;"> <input
+											type="text" class="newHidden" name="regione" value=""
+											placeholder="regione" style="display: block;">
+										<div class="newHidden" style="display: none;">
+											<span id="detailsAlert" style="display: none;">Inserire
+												tutti i campi.</span>
+										</div>
+									</div>
+
+									<div id="secondPage" style="display: none;">
+										<input type="file" name="image"> <span id="imageAlert"
+											style="display: none;">Inserire un immagine.</span>
+									</div>
+
+									<div id="thirdPage" style="display: none;">
+										<span>Risoluzione: </span> <select class="" name="risoluzione">
+											<option value="alta">alta</option>
+											<option value="media">media</option>
+											<option value="bassa">bassa</option>
+										</select> <input type="text" name="provenienza" value=""
+											placeholder="provenienza" required> <input
+											type="date" name="data_acquisizione" value=""
+											placeholder="YYYY-MM-DD"
+											pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
+											title="Enter a date in this format YYYY-MM-DD" required>
+											<span id ="DateController">Data successiva alla data odierna.</span>
+									</div>
+
+
+
+									<button type="button" name="succ">Successivo</button>
+									<input type="reset" name="canc" value="Cancella"> <input
+										type="submit" name="send" value="Invia" style="display: none;">
+
+
+								</form>
+							</div>
+							<!-- ********************************************************* END -->
+						</div>
+						<div id="default_box" class="col">
+							<h2>Localita' di default:</h2>
+							<ul class="list-group" id="default_location">
+
+							</ul>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
